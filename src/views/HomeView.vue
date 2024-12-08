@@ -4,11 +4,14 @@
 
         <InitialWorkSection
             class="justify-items-center"
+            
             v-model:selectedProject="selectedProject"
             v-model:workSectionDescription="workSectionDescription"
             v-model:selectedCompany="selectedCompany"
+
             :projectDropDownList="dropdownTest"
             :companyDropDownList="dropdownTest"
+
             @update:changedProject="console.log('the option: ', selectedProject)"
             @update:changedDescription="console.log('the option: ', workSectionDescription)"
             @update:changedCompany="console.log('the option: ', selectedCompany)"
