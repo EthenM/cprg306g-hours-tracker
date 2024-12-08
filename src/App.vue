@@ -3,7 +3,6 @@
 
     <main class="grow">
         <RouterView/>
-        <p>test</p>
     </main>
 
 </template>

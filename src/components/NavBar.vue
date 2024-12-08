@@ -1,10 +1,11 @@
 <template>
-    <nav class="border-t border-blue-950">
+    <nav class="border-b border-blue-950">
         <!-- this will contain the different pages of the application -->
          <ul>
-            <li>nav 1</li>
-            <li>nav 2</li>
-            <li>nav 3</li>
+            <li><a class="text-gray-300 hover:text-blue-500 transition-colors" href="/">Home</a></li>
+            <li><a class="text-gray-300 hover:text-blue-500 transition-colors" href="/entries">Entries</a></li>
+            <li><a class="text-gray-300 hover:text-blue-500 transition-colors" href="/companies">Companies</a></li>
+            <li><a class="text-gray-300 hover:text-blue-500 transition-colors" href="/projects">Projects</a></li>
          </ul>
     </nav>
 </template>
