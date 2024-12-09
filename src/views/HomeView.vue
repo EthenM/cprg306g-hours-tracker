@@ -1,24 +1,17 @@
 <template>
     <section class="grid gap-4 grid-cols-1 grid-rows-3 items-center h-full">
-        
 
-        <InitialWorkSection
-            class="justify-items-center"
-            
-            v-model:selectedProject="selectedProject"
-            v-model:workSectionDescription="workSectionDescription"
-            v-model:selectedCompany="selectedCompany"
+        <section v-if="entry.startTime" class="justify-self-center">
+            <h2 class="text-3xl text-center mb-2">Time Elapsed</h2>
 
-            :projectDropDownList="dropdownTest"
-            :companyDropDownList="dropdownTest"
+            <div class="text-5xl text-center">
+                {{ timeElapsed?.hours?.toString()?.padStart(2, "0") ?? "00" }} :
+                {{ timeElapsed?.minutes?.toString()?.padStart(2, "0") ?? "00" }} :
+                {{ timeElapsed?.seconds?.toString()?.padStart(2, "0") ?? "00" }}
+            </div>
+        </section>
 
-            @update:changedProject="console.log('the option: ', selectedProject)"
-            @update:changedDescription="console.log('the option: ', workSectionDescription)"
-            @update:changedCompany="console.log('the option: ', selectedCompany)"
-        />
-
-
-        <StartButton class="justify-self-center"/>
+        <StartButton class="justify-self-center row-start-2" :clicked="clockIn"/>
 
 
         
@@ -32,10 +25,12 @@
     import StartButton from '@/components/StartButton.vue';
     import { ref } from 'vue';
 
-    const dropdownTest = ref([{val: '1', text: '1'},{val: '2', text: '2'}])
-    const selectedProject = ref(null)
-    const workSectionDescription = ref('')
-    const selectedCompany = ref(null)
+    const entry = ref({
+        startTime: null,
+        endTime: null,
+    })
+    const currentTimeInterval = ref(null)
+    const timeElapsed = ref(null)
 
     /**
      * TODO:
@@ -49,4 +44,36 @@
      * - add the work sections to the container at the bottom of the screen.
      */
 
+
+    const clockIn = () => {
+        //clear any intervals, if there were
+        if (currentTimeInterval.value) {
+            clearInterval(currentTimeInterval.value)
+        }
+
+        //set the entry's start time to the current time
+        entry.value.startTime = Date.now()
+
+        trackTime()
+    }
+
+    const trackTime = () => {
+        //get the time between the current time and the start time
+        currentTimeInterval.value = setInterval(() => {
+            timeElapsed.value = getDateDifference(Date.now(), entry.value.startTime)
+        }, 1000)
+    }
+
+
+    const getDateDifference = (newDate, oldDate) => {
+        const difference = newDate - oldDate
+
+        return {
+            milliseconds: difference,
+            seconds: parseInt((difference / 1000).toString()) % 60,
+            minutes: parseInt((difference / (1000 * 60)).toString()) % 60,
+            hours: parseInt((difference / (1000 * 60 * 60)).toString()) % 60,
+            days: parseInt((difference / (1000 * 60 * 60 * 24)).toString()) % 24,
+        }
+    }
 </script>

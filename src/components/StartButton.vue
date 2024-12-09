@@ -2,7 +2,7 @@
 
     <div>
         <CircleButton
-            :clicked="() => console.log('hello world!!')"
+            :clicked="clicked"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -24,5 +24,9 @@
 
 <script setup>
     import CircleButton from './elements/CircleButton.vue';
+
+    const props = defineProps({
+        clicked: {type: Function, default: () => true}
+    })
 
 </script>
