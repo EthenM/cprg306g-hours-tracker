@@ -4,8 +4,6 @@
          <ul>
             <li><a class="text-gray-300 hover:text-blue-500 transition-colors" href="/">Home</a></li>
             <li><a class="text-gray-300 hover:text-blue-500 transition-colors" href="/entries">Entries</a></li>
-            <li><a class="text-gray-300 hover:text-blue-500 transition-colors" href="/companies">Companies</a></li>
-            <li><a class="text-gray-300 hover:text-blue-500 transition-colors" href="/projects">Projects</a></li>
          </ul>
     </nav>
 </template>
