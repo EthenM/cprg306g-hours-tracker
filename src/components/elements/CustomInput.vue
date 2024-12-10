@@ -7,6 +7,7 @@
             :title="props.title"
             class="bg-slate-950 rounded-lg p-2 border border-blue-950 w-full focus:bg-slate-800"
             :type="props.type"
+            :disabled="props.disabled"
         />
         <textarea v-else
             :id="props.id"
@@ -21,7 +22,7 @@
 </template>
 
 <script setup>
-import { watch, watchEffect } from 'vue';
+    import { watch } from 'vue';
 
 
     const model = defineModel()
@@ -34,11 +35,11 @@ import { watch, watchEffect } from 'vue';
         label: {type: String, default: null},
         title: {type: String, default: null},
         rows: {type: Number, default: 1},
+        disabled: Boolean,
     })
 
 
     watch(() => model.value, (newVal, oldVal) => {
-        
         if (newVal != oldVal) {
             emits('update:changed')
         }

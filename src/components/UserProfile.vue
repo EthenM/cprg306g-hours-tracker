@@ -1,16 +1,21 @@
 <template>
 
-    <p class="p-2 cursor-pointer" @click="() => openSide = true">{{ user.displayName }}</p>
+    <div class="m-3 cursor-pointer" @click="() => openSide = true">
+        <img :src="user?.photoURL" class="h-8 w-8 rounded-full" alt="The user's profile image" />
+    </div>
 
     <section v-if="openSide"
-        class="absolute h-screen w-1/4 bg-slate-900 border-l-2 border-blue-950 right-0 rounded-l-xl"
+        class="absolute h-screen w-1/4 bg-slate-900 border-l-2 border-blue-950 right-0 rounded-l-xl z-50"
     >
 
         <header class="flex justify-between p-3 border-b border-b-blue-950">
             <button class="cursor-pointer" @click="() => openSide = false">close</button>
-            <div class="text-right">
-                <h2 class="text-xl">{{ user.displayName }}</h2>
-                <p class="text-xs">{{ user.email }}</p>
+            <div class="flex gap-3 items-center">
+                <div class="text-right flex flex-col items-end">
+                    <h2 class="text-xl">{{ user.displayName }}</h2>
+                    <p class="text-xs w-9/12 truncate text-end" :title="user?.email">{{ user.email }}</p>
+                </div>
+                <img :src="user?.photoURL" class="h-8 w-8 rounded-full" alt="The user's profile image" />
             </div>
         </header>
 

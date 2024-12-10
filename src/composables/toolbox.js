@@ -74,9 +74,10 @@ getDateDifference.differencesToReturn = Object.freeze({
  * Formats the date object given.
  * 
  * @param {Date | Number} date Formats the given date in the format YYYY-MM-DD HH:mm:ss
+ * @param {formatDate.format} format Whether to return the date in 12 or 24 hour format
  * @returns The formatted date
  */
-export const formatDate = (date) => {
+export const formatDate = (date, format) => {
 
     //convert the date to a date if it was a number.
     let dateToFormat = typeof date == 'number' ? new Date(date) : date
@@ -91,6 +92,37 @@ export const formatDate = (date) => {
         const minutes = String(dateToFormat.getMinutes()).padStart(2, "0")
         const seconds = String(dateToFormat.getSeconds()).padStart(2, "0")
 
-        return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
+        if (format == formatDate.format.TWELVE) {
+            return year + "-" + month + "-" + day + " " +
+                (hours % 12 || 12) + ":" + minutes + ":" + seconds + (hours > 12 ? "pm" : "am")
+        } else if (format == formatDate.format.TWENTY_FOUR) {
+            return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds
+        }
     }
+}
+
+/**@enum */
+formatDate.format = Object.freeze({
+    TWELVE: 1,
+    TWENTY_FOUR: 2,
+})
+
+
+export const appendTimezone = (dateString) => {
+    const offset = new Date().getTimezoneOffset()
+    const sign = offset > 0 ? '-' : '+'
+    const absoluteOffset = Math.abs(offset)
+    const hours = String(Math.floor(absoluteOffset / 60)).padStart(2, "0")
+    const minutes = String(absoluteOffset % 60).padStart(2, "0")
+
+    return dateString + sign + hours + ":" + minutes
+}
+
+export const validTime = (timeString) => {
+    let dateString = "1970-01-01T" + timeString
+    dateString = appendTimezone(dateString)
+
+    const testDate = new Date(dateString)
+
+    return !isNaN(testDate.getTime())
 }
